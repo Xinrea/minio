@@ -208,6 +208,30 @@ const (
 	ErrPolicyAlreadyAttached
 	ErrPolicyNotAttached
 	ErrExcessData
+
+	// new errors used for error injection testing
+	ErrIncompleteSignature
+	ErrInvalidAction
+	ErrInvalidClientTokenID
+	ErrInvalidParameterCombination
+	ErrInvalidQueryParameter
+	ErrInvalidParameterValue
+	ErrOptInRequired
+	ErrRequestExpired
+	ErrServiceUnavailable
+	ErrThrottling
+	ErrValidation
+	ErrResourceNotFound
+	ErrUnrecognizedClient
+	ErrMalformedQueryString
+	ErrSlowDown
+	ErrInvalidSignature
+	ErrRequestTimeout
+	ErrNetworkDisconnected
+	ErrUnknownError
+	ErrObjectAlreadyInActiveTier
+	ErrObjectNotInActiveTier
+
 	// Add new error codes here.
 
 	// SSE-S3/SSE-KMS related API errors
@@ -457,7 +481,134 @@ func (e errorCodeMap) ToAPIErr(errCode APIErrorCode) APIError {
 
 // error code to APIError structure, these fields carry respective
 // descriptions for all the error responses.
+// new errors added
+// ErrIncompleteSignature
+// ErrInvalidAction
+// ErrInvalidClientTokenID
+// ErrInvalidParameterCombination
+// ErrInvalidQueryParameter
+// ErrInvalidParameterValue
+// ErrOptInRequired
+// ErrRequestExpired
+// ErrServiceUnavailable
+// ErrThrottling
+// ErrValidation
+// ErrResourceNotFound
+// ErrUnrecognizedClient
+// ErrMalformedQueryString
+// ErrSlowDown
+// ErrInvalidSignature
+// ErrRequestTimeout
+// ErrNetworkDisconnected
+// ErrUnknownError
+// ErrObjectAlreadyInActiveTier
+// ErrObjectNotInActiveTier
 var errorCodes = errorCodeMap{
+	ErrIncompleteSignature: {
+		Code:           "IncompleteSignature",
+		Description:    "The request signature does not conform to AWS standards.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrInvalidAction: {
+		Code:           "InvalidAction",
+		Description:    "The action or operation requested is invalid. Verify that the action is typed correctly.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrInvalidClientTokenID: {
+		Code:           "InvalidClientTokenId",
+		Description:    "The X.509 certificate or AWS access key ID provided does not exist in our records.",
+		HTTPStatusCode: http.StatusForbidden,
+	},
+	ErrInvalidParameterCombination: {
+		Code:           "InvalidParameterCombination",
+		Description:    "Parameters that must not be used together were used together.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrInvalidQueryParameter: {
+		Code:           "InvalidQueryParameter",
+		Description:    "The AWS query string is malformed or does not adhere to AWS standards.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrInvalidParameterValue: {
+		Code:           "InvalidParameterValue",
+		Description:    "An invalid or out-of-range value was supplied for the input parameter.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrOptInRequired: {
+		Code:           "OptInRequired",
+		Description:    "The AWS Access Key ID needs a subscription for the service.",
+		HTTPStatusCode: http.StatusForbidden,
+	},
+	ErrRequestExpired: {
+		Code:           "RequestExpired",
+		Description:    "Request has expired.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrServiceUnavailable: {
+		Code:           "ServiceUnavailable",
+		Description:    "The request has failed due to a temporary failure of the server.",
+		HTTPStatusCode: http.StatusServiceUnavailable,
+	},
+	ErrThrottling: {
+		Code:           "Throttling",
+		Description:    "The request was denied due to request throttling.",
+		HTTPStatusCode: http.StatusServiceUnavailable,
+	},
+	ErrValidation: {
+		Code:           "ValidationError",
+		Description:    "The input fails to satisfy the constraints specified by an AWS service.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrResourceNotFound: {
+		Code:           "ResourceNotFound",
+		Description:    "The specified resource does not exist.",
+		HTTPStatusCode: http.StatusNotFound,
+	},
+	ErrUnrecognizedClient: {
+		Code:           "UnrecognizedClient",
+		Description:    "The Access Key ID or security token included in the request is invalid.",
+		HTTPStatusCode: http.StatusForbidden,
+	},
+	ErrMalformedQueryString: {
+		Code:           "MalformedQueryString",
+		Description:    "The query string contains a syntax error.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrSlowDown: {
+		Code:           "SlowDown",
+		Description:    "Please reduce your request rate.",
+		HTTPStatusCode: http.StatusServiceUnavailable,
+	},
+	ErrInvalidSignature: {
+		Code:           "InvalidSignature",
+		Description:    "The request signature does not conform to AWS standards.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrRequestTimeout: {
+		Code:           "RequestTimeout",
+		Description:    "Your socket connection to the server was not read from or written to within the timeout period.",
+		HTTPStatusCode: http.StatusRequestTimeout,
+	},
+	ErrNetworkDisconnected: {
+		Code:           "NetworkDisconnected",
+		Description:    "Your network connection was disconnected.",
+		HTTPStatusCode: http.StatusServiceUnavailable,
+	},
+	ErrUnknownError: {
+		Code:           "UnknownError",
+		Description:    "We encountered an internal error. Please try again.",
+		HTTPStatusCode: http.StatusInternalServerError,
+	},
+	ErrObjectAlreadyInActiveTier: {
+		Code:           "ObjectAlreadyInActiveTierError",
+		Description:    "Object is already in the GLACIER or DEEP_ARCHIVE storage class.",
+		HTTPStatusCode: http.StatusConflict,
+	},
+	ErrObjectNotInActiveTier: {
+		Code:           "ObjectNotInActiveTierError",
+		Description:    "Object is not in the GLACIER or DEEP_ARCHIVE storage class.",
+		HTTPStatusCode: http.StatusConflict,
+	},
 	ErrInvalidCopyDest: {
 		Code:           "InvalidRequest",
 		Description:    "This copy request is illegal because it is trying to copy an object to itself without changing the object's metadata, storage class, website redirect location or encryption attributes.",
