@@ -231,6 +231,9 @@ const (
 	ErrUnknownError
 	ErrObjectAlreadyInActiveTier
 	ErrObjectNotInActiveTier
+	ErrMissingAction
+	ErrMissingAuthenticationToken
+	ErrMissingParameter
 
 	// Add new error codes here.
 
@@ -504,6 +507,21 @@ func (e errorCodeMap) ToAPIErr(errCode APIErrorCode) APIError {
 // ErrObjectAlreadyInActiveTier
 // ErrObjectNotInActiveTier
 var errorCodes = errorCodeMap{
+	ErrMissingAction: {
+		Code:           "MissingAction",
+		Description:    "Missing Action.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrMissingAuthenticationToken: {
+		Code:           "MissingAuthenticationToken",
+		Description:    "Missing Authentication Token.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
+	ErrMissingParameter: {
+		Code:           "MissingParameter",
+		Description:    "Missing required parameter in request.",
+		HTTPStatusCode: http.StatusBadRequest,
+	},
 	ErrIncompleteSignature: {
 		Code:           "IncompleteSignature",
 		Description:    "The request signature does not conform to AWS standards.",

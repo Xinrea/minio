@@ -384,6 +384,9 @@ var injectMap = map[string]APIErrorCode{
 	"NO_SUCH_UPLOAD":                ErrNoSuchUpload,
 	"OBJECT_ALREADY_IN_ACTIVE_TIER": ErrObjectAlreadyInActiveTier,
 	"OBJECT_NOT_IN_ACTIVE_TIER":     ErrObjectNotInActiveTier,
+	"MISSING_ACTION":                ErrMissingAction,
+	"MISSING_AUTHENTICATION_TOKEN":  ErrMissingAuthenticationToken,
+	"MISSING_PARAMETER":             ErrMissingParameter,
 }
 
 func (api objectAPIHandlers) errorInjection(ctx context.Context, objectAPI ObjectLayer, bucket, object string, w http.ResponseWriter, r *http.Request) bool {
